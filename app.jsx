@@ -269,69 +269,7 @@ const deleteCurrentFrame = () => {
   };
 
   const FONT5x7 = {
-    ' ': ['00000','00000','00000','00000','00000','00000','00000'],
-    'A': ['01110','10001','10001','11111','10001','10001','10001'],
-    'B': ['11110','10001','10001','11110','10001','10001','11110'],
-    'C': ['01110','10001','10000','10000','10000','10001','01110'],
-    'D': ['11110','10001','10001','10001','10001','10001','11110'],
-    'E': ['11111','10000','10000','11110','10000','10000','11111'],
-    'F': ['11111','10000','10000','11110','10000','10000','10000'],
-    'G': ['01110','10001','10000','10111','10001','10001','01110'],
-    'H': ['10001','10001','10001','11111','10001','10001','10001'],
-    'I': ['01110','00100','00100','00100','00100','00100','01110'],
-    'J': ['00001','00001','00001','00001','10001','10001','01110'],
-    'K': ['10001','10010','10100','11000','10100','10010','10001'],
-    'L': ['10000','10000','10000','10000','10000','10000','11111'],
-    'M': ['10001','11011','10101','10101','10001','10001','10001'],
-    'N': ['10001','10001','11001','10101','10011','10001','10001'],
-    'O': ['01110','10001','10001','10001','10001','10001','01110'],
-    'P': ['11110','10001','10001','11110','10000','10000','10000'],
-    'Q': ['01110','10001','10001','10001','10101','10010','01101'],
-    'R': ['11110','10001','10001','11110','10100','10010','10001'],
-    'S': ['01111','10000','10000','01110','00001','00001','11110'],
-    'T': ['11111','00100','00100','00100','00100','00100','00100'],
-    'U': ['10001','10001','10001','10001','10001','10001','01110'],
-    'V': ['10001','10001','10001','10001','10001','01010','00100'],
-    'W': ['10001','10001','10001','10101','10101','11011','10001'],
-    'X': ['10001','01010','00100','00100','01010','10001','10001'],
-    'Y': ['10001','01010','00100','00100','00100','00100','00100'],
-    'Z': ['11111','00001','00010','00100','01000','10000','11111'],
-    'a': ['00000','00000','01110','00001','01111','10001','01111'],
-    'b': ['10000','10000','11110','10001','10001','10001','11110'],
-    'c': ['00000','00000','01110','10001','10000','10001','01110'],
-    'd': ['00001','00001','01111','10001','10001','10001','01111'],
-    'e': ['00000','00000','01110','10001','11111','10000','01110'],
-    'f': ['00110','01001','01000','11100','01000','01000','01000'],
-    'g': ['00000','00000','01111','10001','10001','01111','00001'],
-    'h': ['10000','10000','11110','10001','10001','10001','10001'],
-    'i': ['00100','00000','01100','00100','00100','00100','01110'],
-    'j': ['00010','00000','00110','00010','00010','10010','01100'],
-    'k': ['10000','10000','10010','10100','11000','10100','10010'],
-    'l': ['01100','00100','00100','00100','00100','00100','01110'],
-    'm': ['00000','00000','11010','10101','10101','10101','10101'],
-    'n': ['00000','00000','11110','10001','10001','10001','10001'],
-    'o': ['00000','00000','01110','10001','10001','10001','01110'],
-    'p': ['00000','00000','11110','10001','10001','11110','10000'],
-    'q': ['00000','00000','01111','10001','10001','01111','00001'],
-    'r': ['00000','00000','10110','11001','10000','10000','10000'],
-    's': ['00000','00000','01111','10000','01110','00001','11110'],
-    't': ['01000','01000','11100','01000','01000','01001','00110'],
-    'u': ['00000','00000','10001','10001','10001','10001','01111'],
-    'v': ['00000','00000','10001','10001','10001','01010','00100'],
-    'w': ['00000','00000','10001','10001','10101','10101','01010'],
-    'x': ['00000','00000','10001','01010','00100','01010','10001'],
-    'y': ['00000','00000','10001','10001','10001','01111','00001'],
-    'z': ['00000','00000','11111','00010','00100','01000','11111'],
-    '0': ['01110','10001','10011','10101','11001','10001','01110'],
-    '1': ['00100','01100','00100','00100','00100','00100','01110'],
-    '2': ['01110','10001','00001','00010','00100','01000','11111'],
-    '3': ['11110','00001','00001','01110','00001','00001','11110'],
-    '4': ['00010','00110','01010','10010','11111','00010','00010'],
-    '5': ['11111','10000','11110','00001','00001','10001','01110'],
-    '6': ['01110','10000','11110','10001','10001','10001','01110'],
-    '7': ['11111','00001','00010','00100','01000','10000','10000'],
-    '8': ['01110','10001','10001','01110','10001','10001','01110'],
-    '9': ['01110','10001','10001','01111','00001','00001','01110']
+    //removed
   };
 
   const digits = {
@@ -413,6 +351,89 @@ const deleteCurrentFrame = () => {
     }
     return words;
   };
+
+    // --- .h IMPORT ------------------------------------------------------------
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+  const unpackWordsToGrid = (words, srcW, srcH) => {
+    const g = Array.from({ length: HEIGHT }, () => Array.from({ length: WIDTH }, () => false));
+    const useW = clamp(srcW, 1, WIDTH);
+    const useH = clamp(srcH, 1, HEIGHT);
+
+    for (let y = 0; y < useH; y++) {
+      const row = (words[y] >>> 0) || 0;
+      for (let x = 0; x < useW; x++) {
+        const on = ((row >>> (31 - x)) & 1) === 1; // x=0 (left) -> bit 31
+        g[y][x] = on;
+      }
+    }
+    return g;
+  };
+
+  const parseLedHeader = (text) => {
+    const mW = text.match(/#define\s+LED_W\s+(\d+)/);
+    const mH = text.match(/#define\s+LED_H\s+(\d+)/);
+    const mF = text.match(/#define\s+LED_FRAMES\s+(\d+)/);
+    const mFPS = text.match(/#define\s+LED_FPS\s+(\d+)/);
+
+    const srcW = mW ? parseInt(mW[1], 10) : WIDTH;
+    const srcH = mH ? parseInt(mH[1], 10) : HEIGHT;
+    const srcFrames = mF ? parseInt(mF[1], 10) : null;
+    const srcFps = mFPS ? parseInt(mFPS[1], 10) : fps;
+
+    // tries to match: const uint32_t led_anim[LED_FRAMES][H] ... = { ... };
+    const mArr = text.match(/led_anim\s*\[[^\]]*\]\s*\[[^\]]*\][^{]*=\s*\{([\s\S]*?)\}\s*;/);
+    if (!mArr) throw new Error("No led_anim initializer found");
+
+    const body = mArr[1];
+    const nums = body.match(/0x[0-9a-fA-F]+|\b\d+\b/g);
+    if (!nums || nums.length === 0) throw new Error("No values found in led_anim");
+
+    const values = nums.map((s) => {
+      const v = (s.startsWith("0x") || s.startsWith("0X")) ? parseInt(s, 16) : parseInt(s, 10);
+      return (v >>> 0);
+    });
+
+    const rowsPerFrame = clamp(srcH, 1, 1024);
+    const inferredFrames = Math.floor(values.length / rowsPerFrame);
+    const framesCountOut = srcFrames ?? inferredFrames;
+
+    if (!Number.isFinite(framesCountOut) || framesCountOut <= 0) throw new Error("Bad frame count");
+    if (values.length < framesCountOut * rowsPerFrame) throw new Error("Not enough values for frames");
+
+    const framesWords = [];
+    for (let i = 0; i < framesCountOut; i++) {
+      const start = i * rowsPerFrame;
+      framesWords.push(values.slice(start, start + rowsPerFrame));
+    }
+
+    return { srcW, srcH, framesCountOut, srcFps, framesWords };
+  };
+
+  const importFromHeaderRaw = (raw) => {
+    const parsed = parseLedHeader(raw);
+
+    setFramesCount(parsed.framesCountOut);
+    setFps(Math.max(1, parsed.srcFps | 0));
+
+    // .h is merged -> import as a single draw layer
+    const L = mkLayer("Imported .h", "draw");
+    L.frames = makeFrames(parsed.framesCountOut);
+    L.framesExt = Array.from({ length: parsed.framesCountOut }, () => []);
+    L.offsets = Array.from({ length: parsed.framesCountOut }, () => ({ x: 0, y: 0 }));
+    L.keyframes = [];
+
+    for (let fi = 0; fi < parsed.framesCountOut; fi++) {
+      L.frames[fi] = unpackWordsToGrid(parsed.framesWords[fi], parsed.srcW, parsed.srcH);
+    }
+
+    setLayers([L, mkLayer("Text Layer", "text"), mkLayer("Number Layer", "number")]);
+    setSelectedLayerId(L.id);
+    setCurrent(0);
+    setPlaying(false);
+  };
+
   
   const serializeProject = () => ({
     schema: 1,
@@ -494,45 +515,76 @@ const deleteCurrentFrame = () => {
   };
 
   const onUploadProject = (e) => {
-    const f = e.target.files?.[0]; if (!f) return;
+    const f = e.target.files?.[0];
+    if (!f) return;
+
+    const name = (f.name || "").toLowerCase();
+    const ext = name.includes(".") ? name.slice(name.lastIndexOf(".") + 1) : "";
+
     const r = new FileReader();
     r.onload = () => {
+      const raw = String(r.result || "");
+
+      const looksLikeHeader = (s) =>
+        /led_anim\s*\[/.test(s) &&
+        /#define\s+LED_W/.test(s) &&
+        /#define\s+LED_H/.test(s);
+
       try {
-        const raw = String(r.result || '{}');
-        const data = JSON.parse(raw);
-        if (data && (Array.isArray(data.layers) || data.schema === 1)) {
-          applyProject(data);
-        } else if (data && Array.isArray(data.frames) && Number.isFinite(data.width) && Number.isFinite(data.height)) {
-          const W = Math.max(1, Math.floor(data.width));
-          const H = Math.max(1, Math.floor(data.height));
-          const FC = Math.max(1, Math.floor(data.framesCount || data.frames.length));
-          const toGrid = (bytes) => {
-            const g = Array.from({ length: HEIGHT }, () => Array.from({ length: WIDTH }, () => false));
-            let bitIndex = 0;
-            for (let y=0;y<H;y++){
-              for (let x=0;x<W;x++){
-                const bi = bitIndex >> 3, bo = bitIndex & 7;
-                const on = (bytes[bi] >> bo) & 1;
-                if (x < WIDTH && y < HEIGHT) g[y][x] = !!on;
-                bitIndex++;
-                if (bi >= bytes.length) break;
+        if (ext === "h") {
+          importFromHeaderRaw(raw);
+        } else if (ext === "json" || ext === "ledproj") {
+          const data = JSON.parse(raw);
+
+          if (data && (Array.isArray(data.layers) || data.schema === 1)) {
+            applyProject(data);
+          } else if (data && Array.isArray(data.frames) && Number.isFinite(data.width) && Number.isFinite(data.height)) {
+            const W = Math.max(1, Math.floor(data.width));
+            const H = Math.max(1, Math.floor(data.height));
+            const FC = Math.max(1, Math.floor(data.framesCount || data.frames.length));
+
+            const toGrid = (bytes) => {
+              const g = Array.from({ length: HEIGHT }, () => Array.from({ length: WIDTH }, () => false));
+              let bitIndex = 0;
+              for (let y = 0; y < H; y++) {
+                for (let x = 0; x < W; x++) {
+                  const bi = bitIndex >> 3, bo = bitIndex & 7;
+                  const b = bytes[bi] ?? 0;
+                  const on = (b >> bo) & 1;
+                  if (x < WIDTH && y < HEIGHT) g[y][x] = !!on;
+                  bitIndex++;
+                  if (bi >= bytes.length) break;
+                }
               }
+              return g;
+            };
+
+            setFramesCount(FC);
+            const L = mkLayer("Imported Draw", "draw");
+            L.frames = makeFrames(FC);
+            for (let fidx = 0; fidx < FC; fidx++) {
+              const b = data.frames[fidx] || [];
+              L.frames[fidx] = toGrid(b);
             }
-            return g;
-          };
-          setFramesCount(FC);
-          const L = mkLayer('Imported Draw', 'draw');
-          L.frames = makeFrames(FC);
-          for (let fidx=0; fidx<FC; fidx++){
-            const b = data.frames[fidx] || [];
-            L.frames[fidx] = toGrid(b);
+            setLayers([L, mkLayer("Text Layer", "text"), mkLayer("Number Layer", "number")]);
+            setSelectedLayerId(L.id);
+            setCurrent(0);
+            setFps(Math.max(1, Math.floor(data.fps || fps)));
           }
-          setLayers([L, mkLayer('Text Layer', 'text'), mkLayer('Number Layer', 'number')]);
-          setSelectedLayerId(L.id); setCurrent(0);
-          setFps(Math.max(1, Math.floor(data.fps || fps)));
+        } else {
+          // Unknown extension: sniff content
+          if (looksLikeHeader(raw)) {
+            importFromHeaderRaw(raw);
+          } else {
+            const data = JSON.parse(raw);
+            applyProject(data);
+          }
         }
-      } catch {}
+      } catch {
+        // optional: alert("Import failed (unsupported or corrupted file).");
+      }
     };
+
     r.readAsText(f);
     e.target.value = "";
   };
@@ -584,8 +636,15 @@ const uint32_t led_anim[LED_FRAMES][${HEIGHT}] PROGMEM = {
             </div>
             <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:'center' }}>
               <button className="btn" onClick={exportProjectJSON}>Export Project</button>
-              <button className="btn" onClick={()=>fileInputRef.current?.click()}>Import Project</button>
-              <input ref={fileInputRef} type="file" style={{display:'none'}} accept="application/json,.json,.ledproj" onChange={onUploadProject}/>
+              <button className="btn" onClick={()=>fileInputRef.current?.click()}>Import</button>
+<input
+  ref={fileInputRef}
+  type="file"
+  style={{display:'none'}}
+  accept="application/json,.json,.ledproj,.h,text/plain,text/x-c"
+  onChange={onUploadProject}
+/>
+
               <button className="btn" onClick={exportHeader}>Export .h</button>
               <button className="btn" onClick={()=>{
                 try {
